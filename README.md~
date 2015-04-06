@@ -1,0 +1,93 @@
+# Running Notes
+
+## preview markdown file
+    pandoc -s -t html README.md > /tmp/temp.html; firefox /tmp/temp.html 
+An alternative here would be using `grip` from `pip`, that previews github flavored markdown.
+
+## setup virtualenv and install django
+    virtualenv webdev
+    source webdev/bin/activate
+## create django project
+    $ django-admin startproject polyamide  
+### tree stucture of current directory
+ 
+    $ tree -L 2
+    .
+    ├── LICENSE
+    ├── polyamide
+    │   ├── manage.py
+    │   └── polyamide
+    ├── README.md
+    └── webdev
+    	├── bin
+	├── include
+	├── lib
+	├── local
+	└── pip-selfcheck.json
+
+    7 directories, 4 files  
+
+
+Specifically, the files inside the project directory `polyamide` are of special interest --
+
+    $tree -L 2 polyamide
+
+    polyamide/
+    ├── manage.py
+    └── polyamide
+    	├── __init__.py
+    	├── settings.py
+    	├── urls.py
+    	└── wsgi.py
+
+    1 directory, 5 files
+
+### generate databases from default settings.py
+        
+    $ python manage.py migrate
+
+If you use `./manage.py migrate` instead, make sure to use the correct python executable in the first line of `manage.py`. 
+
+### create admin user 
+    
+    $ python manage.py createsuperuser
+
+This fills in the sqlite3 database with the provided username password. 
+    
+### run development server on port 8080
+   On another tab change to the project directory polyamide and begin the development server for your your site -   
+
+    $ python manage.py runserver 8080
+
+### create app for maintaining a list of job openings
+This is the first truly independent part from the django tutorials, because I want to implement a different usecase here. I want to maintain a list of different job applications, their deadlines and other relevant information.
+     
+    $ python manage.py startapp listofjobs
+
+Notice how that changes the directory list - there is a new folder now called `listofjobs` with its own models(i.e databases),views etc.
+
+       $ tree 
+       .
+       ├── db.sqlite3
+       ├── listofjobs
+       │   ├── admin.py
+       │   ├── __init__.py
+       │   ├── migrations
+       │   │   └── __init__.py
+       │   ├── models.py
+       │   ├── tests.py
+       │   └── views.py
+       ├── manage.py
+       ├── manage.py~
+       └── polyamide
+              ├── __init__.py
+	      ├── __init__.pyc
+	      ├── settings.py
+	      ├── settings.pyc
+	      ├── urls.py
+	      ├── urls.pyc
+	      ├── wsgi.py
+	      └── wsgi.pyc
+
+       3 directories, 17 files
+
